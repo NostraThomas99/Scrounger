@@ -64,6 +64,8 @@
   <EmbeddedResource Include="Data\IlvConvertTable.csv" />
   <Compile Remove="AutoGather\AutoGather.Ui.cs" />
   <None Include="AutoGather\AutoGather.Ui.cs" />
+  <None Remove="Data\honk-sound.wav" />
+  <EmbeddedResource Include="Data\honk-sound.wav" />
 </ItemGroup>
 
         </Project>

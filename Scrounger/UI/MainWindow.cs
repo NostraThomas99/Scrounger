@@ -31,6 +31,7 @@ public partial class MainWindow : Window
         if (!tab)
             return;
         DrawGatherablesTab();
+        DrawConfigTab();
         DrawDebugTab();
     }
 }

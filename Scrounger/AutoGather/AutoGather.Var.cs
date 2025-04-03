@@ -68,14 +68,14 @@ namespace Scrounger.AutoGather
         }
 
         public bool ShouldUseFlag
-            => !Scrounger.Config.DisableFlagPathing;
+            => Scrounger.Config.FlagPathing;
 
         public bool ShouldFly(Vector3 destination)
         {
             if (Svc.Condition[ConditionFlag.InFlight] || Svc.Condition[ConditionFlag.Diving])
                 return true;
 
-            if (Scrounger.Config.ForceWalking || Svc.ClientState.LocalPlayer == null)
+            if (!Scrounger.Config.UseFlying || Svc.ClientState.LocalPlayer == null)
             {
                 return false;
             }

@@ -14,11 +14,11 @@ public partial class MainWindow
     private GatherListSelector _selector;
     public void DrawGatherablesTab()
     {
-        using var id = ImRaii.PushId("GatherablesTab");
-        using var tab = ImRaii.TabItem("Gatherables");
+        using var id = ImRaii.PushId("AutoGatherTab");
+        using var tab = ImRaii.TabItem("Auto-Gather");
         if (!tab)
             return;
-        ImGuiUtil.HoverTooltip("A list of every gatherable in the game");
+        ImGuiUtil.HoverTooltip("Get dem goodies");
         _selector.Draw(100);
         ImGui.SameLine();
         DrawGatherList(_selector.Current);

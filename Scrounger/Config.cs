@@ -47,8 +47,8 @@ public class Config
     public bool DoMaterialize { get; set; } = true;
     public int ExecutionDelay { get; set; } = 1000;
     public Dictionary<uint, List<Vector3>> BlacklistedNodesByTerritoryId { get; set; } = [];
-    public bool DisableFlagPathing { get; set; } = false;
-    public bool ForceWalking { get; set; } = false;
+    public bool FlagPathing { get; set; } = true;
+    public bool UseFlying { get; set; } = true;
     public int TimedNodePrecog { get; set; } = 0;
     public bool DoGathering { get; set; } = true;
     public bool GoHomeWhenIdle { get; set; } = true;

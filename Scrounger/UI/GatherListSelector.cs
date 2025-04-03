@@ -24,7 +24,7 @@ public class GatherListSelector : ItemSelector<AutoGatherList>
 
     protected override bool OnDelete(int idx)
     {
-        //return _plugin.AutoGatherListsManager.RemoveList(idx);
+        _plugin.AutoGatherListsManager.DeleteList(idx);
         return true;
     }
 

@@ -10,7 +10,7 @@ namespace Scrounger.AutoGather.Movement;
 
 public class SoundHelper
 {
-    private const string SoundResource = "Scrounger.CustomInfo.honk-sound.wav";
+    private const string SoundResource = "Scrounger.Data.honk-sound.wav";
 
     public void PlayHonkSound(int repeatCount)
     {
@@ -35,7 +35,7 @@ public class SoundHelper
     private void PlaySound(Stream stream)
     {
         // Use SoundPlayer to play the WAV file from the stream
-        using (var player = new SoundPlayer(stream))
+        using (var player = new System.Media.SoundPlayer(stream))
         {
             player.Load();     // Load the stream into the player
             player.PlaySync(); // Play synchronously
