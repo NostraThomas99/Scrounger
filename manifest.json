@@ -1,0 +1,26 @@
+{
+  "Author": "NostraThomas",
+  "Name": "Scrounger",
+  "InternalName": "Scrounger",
+  "Description": "Automatic gathering of crafting materials using vnavmesh (and other plugins)",
+  "ApplicableVersion": "any",
+  "DalamudApiLevel": 12,
+  "TestingDalamudApiLevel": 12,
+  "Tags": [
+    "Gathering",
+    "Fishing",
+    "Mining",
+    "Botany",
+    "Weather",
+    "Alarms",
+    "Automatic",
+    "Forager"
+  ],
+  "CategoryTags": [
+    "Jobs",
+    "Utility"
+  ],
+  "IsTestingExclusive": false,
+  "Punchline": "Are you telling me a shrimp fried this rice?",
+  "AcceptsFeedback": true
+}
