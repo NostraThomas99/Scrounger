@@ -1,0 +1,6 @@
+[submodule "GatherBuddy"]
+	path = GatherBuddy
+	url = https://github.com/Ottermandias/GatherBuddy
+[submodule "ECommons"]
+	path = ECommons
+	url = https://github.com/NightmareXIV/ECommons
