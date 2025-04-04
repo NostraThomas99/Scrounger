@@ -14,7 +14,8 @@ public partial class MainWindow : Window
         _plugin = plugin;
         Size = new(800, 600);
         SizeCondition = ImGuiCond.FirstUseEver;
-
+        TitleBarButtons.Add(new TitleBarButtons().DonationButton);
+        TitleBarButtons.Add(new TitleBarButtons().DiscordButton);
         _selector = new GatherListSelector(_plugin);
     }
 
