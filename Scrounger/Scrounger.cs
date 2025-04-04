@@ -4,6 +4,7 @@ using ECommons;
 using ECommons.Commands;
 using ECommons.DalamudServices;
 using OtterGui.Log;
+using Scrounger.AutoGather;
 using Scrounger.AutoGather.Lists;
 using Scrounger.UI;
 using Scrounger.Utils;
@@ -42,6 +43,11 @@ public class Scrounger :IDalamudPlugin
         Svc.PluginInterface.UiBuilder.Draw += _windowSystem.Draw;
         Svc.PluginInterface.UiBuilder.OpenMainUi += OpenMainUi;
         Svc.Framework.Update += AutoGather.DoAutoGather;
+    }
+
+    public ConfigPreset GetPreset(Guid id)
+    {
+        return _mainWindow.GetPreset(id);
     }
 
     public void OpenMainUi()

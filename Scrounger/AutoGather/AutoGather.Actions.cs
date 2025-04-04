@@ -146,7 +146,7 @@ namespace Scrounger.AutoGather
             var (useSkills, slot) = GetItemSlotToGather(target);
             if (useSkills)
             {
-                var configPreset = MatchConfigPreset(slot.Item);
+                var configPreset = GetConfigPreset(target.Id);
                 var config = configPreset.GatherableActions;
 
                 if (configPreset.ChooseBestActionsAutomatically)
@@ -188,7 +188,7 @@ namespace Scrounger.AutoGather
                             if (action != null)
                                 EnqueueActionWithDelay(() => UseAction(action));
                             else
-                                EnqueueGatherItem(slot);
+                                EnqueueGatherItem(slot, target.Id);
                         }
                     }
                 }
@@ -215,12 +215,12 @@ namespace Scrounger.AutoGather
                     else if (ShouldUseBountiful(slot, config))
                         EnqueueActionWithDelay(() => UseAction(Actions.Bountiful));
                     else
-                        EnqueueGatherItem(slot);
+                        EnqueueGatherItem(slot, target.Id);
                 }
             }
             else
             {
-                EnqueueGatherItem(slot);
+                EnqueueGatherItem(slot, target.Id);
             }
         }
 
@@ -229,7 +229,7 @@ namespace Scrounger.AutoGather
             if (Scrounger.Config.UseGivingLandOnCooldown && desiredItem != null && desiredItem.NodeType == GatherBuddy.Enums.NodeType.Regular)
             {
                 var anyCrystal = GetAnyCrystalInNode();
-                return anyCrystal != null && ShouldUseGivingLand(anyCrystal, MatchConfigPreset(anyCrystal.Item));
+                return anyCrystal != null && ShouldUseGivingLand(anyCrystal, GetConfigPreset(anyCrystal.Item));
             }
 
             return false;

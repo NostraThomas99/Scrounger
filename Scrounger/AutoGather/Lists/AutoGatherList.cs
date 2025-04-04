@@ -20,6 +20,7 @@ public class AutoGatherList
     public string Description { get; set; } = string.Empty;
     public bool Enabled { get; set; } = false;
     public bool Fallback { get; set; } = false;
+    public Guid PresetId { get; set; } = Guid.Empty;
 
     private List<Gatherable> items = [];
     private Dictionary<Gatherable, uint> quantities = [];

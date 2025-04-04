@@ -391,7 +391,7 @@ namespace Scrounger.AutoGather
             if (ActivateGatheringBuffs(next.Item.NodeType is NodeType.Unspoiled or NodeType.Legendary))
                 return;
 
-            var config = MatchConfigPreset(next.Item);
+            var config = GetConfigPreset(next.Id);
 
             if (DoUseConsumablesWithoutCastTime(config))
                 return;

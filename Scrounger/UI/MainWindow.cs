@@ -26,18 +26,19 @@ public partial class MainWindow : Window
 
     public override void Draw()
     {
-        var enabled = _plugin.AutoGather.Enabled;
-        if (ImGui.Checkbox("Enabled", ref enabled))
+        string buttonText = _plugin.AutoGather.Enabled ? "Stop Gathering" : "Start Gathering";
+        if (ImGui.Button(buttonText))
         {
-            _plugin.AutoGather.Enabled = enabled;
+            _plugin.AutoGather.Enabled = !_plugin.AutoGather.Enabled;
         }
-
-        ImGui.Text(_plugin.AutoGather.AutoStatus);
+        ImGui.SameLine();
+        ImGui.Text($"Status: {_plugin.AutoGather.AutoStatus}");
         using var tab = ImRaii.TabBar("ScroungerTabs", ImGuiTabBarFlags.Reorderable);
         if (!tab)
             return;
         DrawGatherablesTab();
         DrawConfigTab();
+        DrawConfigPresetsTab();
         DrawDebugTab();
     }
 }

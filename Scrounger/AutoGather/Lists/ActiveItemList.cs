@@ -95,13 +95,13 @@ namespace Scrounger.AutoGather.Lists
                 _visitedTimedNodes[x.Node] = x.Time;
         }
 
-        private bool NeedsGathering((Gatherable item, uint quantity) value)
+        private bool NeedsGathering((Gatherable item, uint quantity, Guid presetId) value)
         {
-            var (item, quantity) = value;
+            var (item, quantity, presetId) = value;
             return item.GetInventoryCount() < (item.IsTreasureMap() ? 1 : quantity);
         }
 
-        private bool NeedsGathering(GatherTarget target) => NeedsGathering((target.Item, target.Quantity));
+        private bool NeedsGathering(GatherTarget target) => NeedsGathering((target.Item, target.Quantity, target.Id));
 
 
         private void OnActiveItemsChanged()
@@ -139,9 +139,9 @@ namespace Scrounger.AutoGather.Lists
                 // If treasure map, only gather if the allowance is up.
                 .Where(x => !x.Item.IsTreasureMap() || (nextAllowance ??= DiscipleOfLand.NextTreasureMapAllowance) < adjustedServerTime.DateTime)
                 // Fetch preferred location.
-                .Select(x => (x.Item, x.Quantity, PreferredLocation: _listsManager.GetPreferredLocation(x.Item)))
+                .Select(x => (x.Item, x.Quantity, PreferredLocation: _listsManager.GetPreferredLocation(x.Item), x.PresetId))
                 // Flatten node list add calculate the next uptime.
-                .SelectMany(x => x.Item.NodeList.Select(Node => (x.Item, Node, Time: Node.Times.NextUptime(adjustedServerTime), x.Quantity, x.PreferredLocation)))
+                .SelectMany(x => x.Item.NodeList.Select(Node => (x.Item, Node, Time: Node.Times.NextUptime(adjustedServerTime), x.Quantity, x.PreferredLocation, x.PresetId)))
                 // Remove nodes with a level higher than the player can gather.
                 .Where(info => info.Node.GatheringType.ToGroup() switch
                 {
@@ -189,7 +189,7 @@ namespace Scrounger.AutoGather.Lists
             }
 
             _gatherableItems.Clear();
-            _gatherableItems.AddRange(nodes.Select(x => new GatherTarget(x.Item, x.Node, x.Time, x.Quantity)));
+            _gatherableItems.AddRange(nodes.Select(x => new GatherTarget(x.Item, x.Node, x.Time, x.Quantity, x.PresetId)));
         }
 
         private static float GetHorizontalSquaredDistanceToPlayer(GatheringNode node)
@@ -329,5 +329,5 @@ namespace Scrounger.AutoGather.Lists
             }
         }
     }
-    public record struct GatherTarget(Gatherable Item, GatheringNode Node, TimeInterval Time, uint Quantity) { }
+    public record struct GatherTarget(Gatherable Item, GatheringNode Node, TimeInterval Time, uint Quantity, Guid Id) { }
 }

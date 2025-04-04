@@ -10,29 +10,24 @@ namespace Scrounger.AutoGather
     {
         public const int MaxCollectability = 1000;
         public const int MaxIntegrity = 10;
-        public const int MaxLevel = 100;
-        public const int MaxGvl = 1000;
         public const int MaxGP = 2000;
 
         private int gatherableMinGP = 0;
         private int collectableMinGP = 0;
         private int collectableActionsMinGP = 0;
-        private int collectableTagetScore = MaxCollectability;
+        private int _collectableTargetScore = MaxCollectability;
         private int collectableMinScore = 400;
 
-        public bool Enabled { get; set; } = false;
+        //public bool Enabled { get; set; } = false;
         public string Name { get; set; } = string.Empty;
-        public NodeTypeRec NodeType { get; init; } = new();
-        public LevelRec ItemLevel { get; init; } = new();
-        public ItemTypeRec ItemType { get; init; } = new();
-
+        public Guid Id { get; set; } = Guid.NewGuid();
         public bool UseGivingLandOnCooldown { get; set; } = false;
         public int GatherableMinGP { get => gatherableMinGP; set => gatherableMinGP = Math.Max(0, Math.Min(MaxGP, value)); }
         public int CollectableMinGP { get => collectableMinGP; set => collectableMinGP = Math.Max(0, Math.Min(MaxGP, value)); }
         public int CollectableActionsMinGP { get => collectableActionsMinGP; set => collectableActionsMinGP = Math.Max(0, Math.Min(MaxGP, value)); }
         public bool CollectableAlwaysUseSolidAge { get; set; } = true;
         public bool CollectableManualScores { get; set; } = false;
-        public int CollectableTagetScore { get => collectableTagetScore; set => collectableTagetScore = Math.Max(0, Math.Min(MaxCollectability, value)); }
+        public int CollectableTargetScore { get => _collectableTargetScore; set => _collectableTargetScore = Math.Max(0, Math.Min(MaxCollectability, value)); }
         public int CollectableMinScore { get => collectableMinScore; set => collectableMinScore = Math.Max(0, Math.Min(MaxCollectability, value)); }
         public bool ChooseBestActionsAutomatically { get; set; } = false;
         public bool SpendGPOnBestNodesOnly { get; set; } = false;
@@ -81,30 +76,6 @@ namespace Scrounger.AutoGather
             public uint ItemId { get; set; } = 0;
         }
 
-        public record class LevelRec {
-            private int min = 1;
-            private int max = MaxLevel;
-
-            [JsonProperty(Order = 1)]
-            public int Min { get => min; set => min = Math.Max(1, Math.Min(UseGlv ? MaxGvl : MaxLevel, value)); }
-            [JsonProperty(Order = 1)]
-            public int Max { get => max; set => max = Math.Max(1, Math.Min(UseGlv ? MaxGvl : MaxLevel, value)); }
-            [JsonProperty(Order = 0)]
-            public bool UseGlv { get; set; }
-        }
-        public record class ItemTypeRec
-        {
-            public bool Crystals { get; set; } = true;
-            public bool Collectables { get; set; } = true;
-            public bool Other { get; set; } = true;
-        }
-        public record class NodeTypeRec
-        {
-            public bool Regular { get; set; } = true;
-            public bool Unspoiled { get; set; } = true;
-            public bool Legendary { get; set; } = true;
-            public bool Ephemeral { get; set; } = true;
-        }
         public record class GatheringActionsRec
         {
             public ActionConfigYieldBonus Bountiful { get; init; } = new() { MinGP = AutoGather.Actions.Bountiful.GpCost};
@@ -166,12 +137,8 @@ namespace Scrounger.AutoGather
 
         public ConfigPreset(ConfigPreset original)
         {
-            Enabled = original.Enabled;
+            //Enabled = original.Enabled;
             Name = original.Name;
-            
-            ItemLevel = original.ItemLevel with { };
-            ItemType = original.ItemType with { };
-            NodeType = original.NodeType with { };
 
             UseGivingLandOnCooldown = original.UseGivingLandOnCooldown;
             GatherableMinGP = original.GatherableMinGP;
@@ -179,7 +146,7 @@ namespace Scrounger.AutoGather
             CollectableMinGP = original.CollectableMinGP;
             CollectableActionsMinGP = original.CollectableActionsMinGP;
             CollectableAlwaysUseSolidAge = original.CollectableAlwaysUseSolidAge;
-            CollectableTagetScore = original.CollectableTagetScore;
+            CollectableTargetScore = original.CollectableTargetScore;
             CollectableMinScore = original.CollectableMinScore;
 
             ChooseBestActionsAutomatically = original.ChooseBestActionsAutomatically;
@@ -194,31 +161,10 @@ namespace Scrounger.AutoGather
         {
             return this with
             {
-                Enabled = true,
+                //Enabled = true,
                 Name = "Default",
-                ItemLevel = new(),
-                ItemType = new(),
-                NodeType = new()
             };
         }
-
-        public bool Match(Gatherable item) =>
-            Enabled
-            && (
-                !ItemLevel.UseGlv && item.Level >= ItemLevel.Min && item.Level <= ItemLevel.Max
-              || ItemLevel.UseGlv && item.GatheringData.GatheringItemLevel.RowId >= ItemLevel.Min && item.GatheringData.GatheringItemLevel.RowId <= ItemLevel.Max
-            )
-            && item.NodeType switch
-            {
-                GatherBuddy.Enums.NodeType.Regular => NodeType.Regular,
-                GatherBuddy.Enums.NodeType.Unspoiled => NodeType.Unspoiled,
-                GatherBuddy.Enums.NodeType.Legendary => NodeType.Legendary,
-                GatherBuddy.Enums.NodeType.Ephemeral => NodeType.Ephemeral,
-                _ => false
-            }
-                && (   item.IsCrystal() && ItemType.Crystals
-                || item.ItemData.IsCollectable && ItemType.Collectables
-                || !item.IsCrystal() && !item.ItemData.IsCollectable && ItemType.Other);
 
         public string ToBase64String()
         {

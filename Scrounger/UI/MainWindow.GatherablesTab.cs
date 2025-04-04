@@ -14,6 +14,7 @@ namespace Scrounger.UI;
 public partial class MainWindow
 {
     private GatherListSelector _selector;
+
     public void DrawGatherablesTab()
     {
         using var id = ImRaii.PushId("AutoGatherTab");
@@ -21,7 +22,7 @@ public partial class MainWindow
         if (!tab)
             return;
         ImGuiUtil.HoverTooltip("Get dem goodies");
-        ImGui.BeginChild("GatherTab", new Vector2(0,0), false);
+        ImGui.BeginChild("GatherTab", new Vector2(0, 0), false);
         _selector.Draw(SelectorWidth);
         ImGui.SameLine();
         DrawGatherList(_selector.Current);
@@ -31,7 +32,7 @@ public partial class MainWindow
     private void DrawGatherList(AutoGatherList? selectorCurrent)
     {
         using var id = ImRaii.PushId("GatherList");
-        ImGui.BeginChild("GatherList", new Vector2(0,0), true);
+        ImGui.BeginChild("GatherList", new Vector2(0, 0), true);
         if (selectorCurrent == null)
         {
             ImGui.Text("No gather list selected");
@@ -40,6 +41,7 @@ public partial class MainWindow
         {
             DrawGatherListInternal(selectorCurrent);
         }
+
         ImGui.EndChild();
     }
 
@@ -53,6 +55,14 @@ public partial class MainWindow
         {
             _plugin.AutoGatherListsManager.ToggleList(selectorCurrent);
         }
+
+        ImGui.SameLine();
+        var fallback = selectorCurrent.Fallback;
+        if (ImGui.Checkbox($"Fallback##list", ref fallback))
+        {
+            selectorCurrent.Fallback = fallback;
+        }
+        DrawPresetSelector(selectorCurrent);
         ImGui.Separator();
         ImGui.BeginGroup();
 
@@ -83,16 +93,36 @@ public partial class MainWindow
             {
                 _plugin.AutoGatherListsManager.ChangeQuantity(selectorCurrent, item, (uint)quantity);
             }
+
             ImGui.TableSetColumnIndex(5);
             if (ImGui.Button("Remove"))
             {
                 _plugin.AutoGatherListsManager.RemoveItem(selectorCurrent, item);
             }
-
         }
+
         ImGui.EndTable();
 
         ImGui.EndGroup();
+    }
+
+    private void DrawPresetSelector(AutoGatherList selectorCurrent)
+    {
+        var selected = _presetsSelector.Presets.FirstOrDefault(p => p.Id == selectorCurrent.PresetId)?.Name ??
+                       _presetsSelector.Presets.First().Name;
+        using var combo = ImRaii.Combo("Gathering Preset", selected);
+        if (combo)
+        {
+            var presets = _presetsSelector.Presets;
+            foreach (var preset in presets)
+            {
+                if (ImGui.Selectable(preset.Name))
+                {
+                    selectorCurrent.PresetId = preset.Id;
+                    _plugin.AutoGatherListsManager.Save();
+                }
+            }
+        }
     }
 
     private string GetUptimeString(Gatherable item)
@@ -105,10 +135,12 @@ public partial class MainWindow
 
             return node.Times.PrintHours();
         }
+
         return "Never Available";
     }
 
     private string _searchTerm = string.Empty;
+
     private void DrawItemAdd(AutoGatherList selectorCurrent)
     {
         ImGui.Text("Item Search");
@@ -138,6 +170,7 @@ public partial class MainWindow
         {
             ImGui.Text("Items will appear here when you enter a search term.");
         }
+
         ImGui.EndChild();
     }
 }

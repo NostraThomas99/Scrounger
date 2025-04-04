@@ -25,7 +25,7 @@ namespace Scrounger.AutoGather
             TaskManager.Enqueue(() => Svc.Condition[ConditionFlag.Gathering], 500);
         }
 
-        private unsafe void EnqueueGatherItem(ItemSlot slot)
+        private unsafe void EnqueueGatherItem(ItemSlot slot, Guid presetId)
         {
             var gatheringAddon = GatheringAddon;
             if (gatheringAddon == null)
@@ -35,7 +35,7 @@ namespace Scrounger.AutoGather
             {
                 // Since it's possible that we are not gathering the top item in the list,
                 // we need to remember what we are going to gather inside MasterpieceAddon
-                CurrentCollectableRotation = new CollectableRotation(MatchConfigPreset(slot.Item), slot.Item, _activeItemList.FirstOrDefault(x => x.Item == slot.Item).Quantity);
+                CurrentCollectableRotation = new CollectableRotation(GetConfigPreset(presetId), slot.Item, _activeItemList.FirstOrDefault(x => x.Item == slot.Item).Quantity);
             }
 
             var itemIndex           = slot.Index;

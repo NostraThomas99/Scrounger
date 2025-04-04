@@ -205,7 +205,13 @@ namespace Scrounger.AutoGather
         public static TimeStamp AdjustedServerTime
             => Scrounger.Time.ServerTime.AddSeconds(Scrounger.Config.TimedNodePrecog);
 
-        private ConfigPreset MatchConfigPreset(Gatherable? item) =>
-            new ConfigPreset(); //_plugin.Interface.MatchConfigPreset(item); TODO: Needs Config Presets
+        private ConfigPreset GetConfigPreset(Gatherable node)
+        {
+            return GetConfigPreset(Guid.Empty);
+        }
+        private ConfigPreset GetConfigPreset(Guid id)
+        {
+            return _plugin.GetPreset(id);
+        }
     }
 }

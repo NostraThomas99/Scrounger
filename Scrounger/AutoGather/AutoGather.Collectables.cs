@@ -94,7 +94,7 @@ namespace Scrounger.AutoGather
             private (int targetScore, int minScore) GetCollectabilityScores(AddonGatheringMasterpiece* MasterpieceAddon)
             {
                 if (config.CollectableManualScores)
-                    return (config.CollectableTagetScore, config.CollectableMinScore);
+                    return (config.CollectableTargetScore, config.CollectableMinScore);
 
                 var regex = NumberRegex();
                 int targetScore, minScore;
