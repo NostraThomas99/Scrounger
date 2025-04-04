@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using System.Numerics;
+using ImGuiNET;
 using OtterGui;
 using OtterGui.Raii;
 
@@ -14,7 +15,9 @@ public partial class MainWindow
         if (!tab)
             return;
         ImGuiUtil.HoverTooltip("Debuggeratingsfunktioner");
+        ImGui.BeginChild("DebugTab", new Vector2(0,0), false);
         DrawWorldLocations();
+        ImGui.EndChild();
     }
 
     private void DrawWorldLocations()

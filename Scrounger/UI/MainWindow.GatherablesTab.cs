@@ -1,6 +1,8 @@
 ﻿using System.Numerics;
 using ECommons.DalamudServices;
+using ECommons.ImGuiMethods;
 using GatherBuddy.Classes;
+using GatherBuddy.Time;
 using ImGuiNET;
 using OtterGui;
 using OtterGui.Raii;
@@ -19,15 +21,17 @@ public partial class MainWindow
         if (!tab)
             return;
         ImGuiUtil.HoverTooltip("Get dem goodies");
-        _selector.Draw(100);
+        ImGui.BeginChild("GatherTab", new Vector2(0,0), false);
+        _selector.Draw(SelectorWidth);
         ImGui.SameLine();
         DrawGatherList(_selector.Current);
+        ImGui.EndChild();
     }
 
     private void DrawGatherList(AutoGatherList? selectorCurrent)
     {
         using var id = ImRaii.PushId("GatherList");
-        ImGui.BeginGroup();
+        ImGui.BeginChild("GatherList", new Vector2(0,0), true);
         if (selectorCurrent == null)
         {
             ImGui.Text("No gather list selected");
@@ -36,7 +40,7 @@ public partial class MainWindow
         {
             DrawGatherListInternal(selectorCurrent);
         }
-        ImGui.EndGroup();
+        ImGui.EndChild();
     }
 
     private void DrawGatherListInternal(AutoGatherList selectorCurrent)
@@ -52,10 +56,13 @@ public partial class MainWindow
         ImGui.Separator();
         ImGui.BeginGroup();
 
-        ImGui.BeginTable("##gatherablesTable", 3, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg);
+        ImGui.BeginTable("##gatherablesTable", 6, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg);
         ImGui.TableSetupColumn("Item");
+        ImGui.TableSetupColumn("Availability");
+        ImGui.TableSetupColumn("Preferred Location");
         ImGui.TableSetupColumn("Inventory Amount");
         ImGui.TableSetupColumn("Desired Quantity");
+        ImGui.TableSetupColumn("Remove");
 
         ImGui.TableHeadersRow();
         foreach (var item in selectorCurrent.Items)
@@ -64,71 +71,73 @@ public partial class MainWindow
             ImGui.TableSetColumnIndex(0);
             ImGui.Text(item.Name.ToString());
             ImGui.TableSetColumnIndex(1);
-            ImGui.Text(item.GetInventoryCount().ToString());
+            ImGui.Text(GetUptimeString(item));
             ImGui.TableSetColumnIndex(2);
+            ImGui.Text("(Coming soon...)");
+            ImGui.TableSetColumnIndex(3);
+            ImGui.Text(item.GetInventoryCount().ToString());
+            ImGui.TableSetColumnIndex(4);
             ImGui.SetNextItemWidth(100);
             var quantity = (int)selectorCurrent.Quantities[item];
             if (ImGui.InputInt($"##quantity{item.ItemId}", ref quantity))
             {
                 _plugin.AutoGatherListsManager.ChangeQuantity(selectorCurrent, item, (uint)quantity);
             }
+            ImGui.TableSetColumnIndex(5);
+            if (ImGui.Button("Remove"))
+            {
+                _plugin.AutoGatherListsManager.RemoveItem(selectorCurrent, item);
+            }
+
         }
         ImGui.EndTable();
 
         ImGui.EndGroup();
     }
 
+    private string GetUptimeString(Gatherable item)
+    {
+        var time = (uint)Scrounger.Time.ServerTime.Time;
+        foreach (var node in item.NodeList)
+        {
+            if (node.Times.AlwaysUp())
+                return "Always Available";
+
+            return node.Times.PrintHours();
+        }
+        return "Never Available";
+    }
+
     private string _searchTerm = string.Empty;
-    private Gatherable? _selectedItem;
     private void DrawItemAdd(AutoGatherList selectorCurrent)
     {
         ImGui.Text("Item Search");
         ImGui.InputText("##searchBar", ref _searchTerm, 100);
 
-        var popUpId = "Item Search Popup";
-        if (!string.IsNullOrEmpty(_searchTerm) && _selectedItem is null)
+        ImGui.BeginChild($"ItemList", new Vector2(0, 100), true);
+        if (!string.IsNullOrEmpty(_searchTerm))
         {
-            ImGui.OpenPopup(popUpId);
             var matchingItems = Scrounger.WorldData.Gatherables.Where(item =>
                 item.Value.Name.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
 
             if (matchingItems.Any())
             {
-                ImGui.BeginChild($"ItemList", new Vector2(0, 150), true);
                 foreach (var item in matchingItems)
                 {
                     if (ImGui.Selectable(item.Value.Name.ToString()))
                     {
-                        _selectedItem = item.Value;
-                        _searchTerm = item.Value.Name.ToString();
+                        selectorCurrent.Add(item.Value, 1);
+                        _plugin.AutoGatherListsManager.Save();
+                        Svc.Log.Debug($"Added shopping list item: {item.Value.Name}");
+                        _searchTerm = string.Empty;
                     }
                 }
-
-                ImGui.EndChild();
             }
         }
-
-        ImGui.SameLine();
-        if (ImGui.Button("Add"))
+        else
         {
-            if (_selectedItem is null)
-            {
-                Svc.Log.Warning("No item to add to shopping list");
-                return;
-            }
-            selectorCurrent.Add(_selectedItem);
-            _searchTerm = string.Empty;
-            _selectedItem = null;
-            _plugin.AutoGatherListsManager.Save();
-            Svc.Log.Debug($"Added shopping list item: {_selectedItem?.Name}");
-            ImGui.CloseCurrentPopup();
+            ImGui.Text("Items will appear here when you enter a search term.");
         }
-
-        ImGui.SameLine();
-        if (ImGui.Button("Clear"))
-        {
-            _selectedItem = null;
-            _searchTerm = string.Empty;
-        }
+        ImGui.EndChild();
     }
 }

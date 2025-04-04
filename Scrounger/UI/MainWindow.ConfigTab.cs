@@ -1,4 +1,5 @@
-﻿using ECommons.DalamudServices;
+﻿using System.Numerics;
+using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using ImGuiNET;
 using Lumina.Excel.Sheets;
@@ -18,10 +19,12 @@ public partial class MainWindow
         if (!tab)
             return;
         ImGuiUtil.HoverTooltip("Settings 'n' such");
+        ImGui.BeginChild("ConfigTab" , new Vector2(0,0), false);
         DrawGeneralSettings();
         DrawTimerSettings();
         DrawFunctionSettings();
         DrawAdvancedSettings();
+        ImGui.EndChild();
     }
 
     private void DrawAdvancedSettings()

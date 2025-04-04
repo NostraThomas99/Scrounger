@@ -18,6 +18,12 @@ public partial class MainWindow : Window
         _selector = new GatherListSelector(_plugin);
     }
 
+    public override void PreDraw()
+    {
+        SetupValues();
+        base.PreDraw();
+    }
+
     public override void Draw()
     {
         var enabled = _plugin.AutoGather.Enabled;

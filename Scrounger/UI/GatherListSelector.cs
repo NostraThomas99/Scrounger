@@ -9,7 +9,7 @@ public class GatherListSelector : ItemSelector<AutoGatherList>
 {
     private readonly Scrounger _plugin;
 
-    public GatherListSelector(Scrounger plugin) : base(plugin.AutoGatherListsManager.Lists, Flags.All)
+    public GatherListSelector(Scrounger plugin) : base(plugin.AutoGatherListsManager.Lists, Flags.All ^ Flags.Drop)
     {
         _plugin = plugin;
     }

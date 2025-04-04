@@ -75,12 +75,16 @@ public partial class AutoGatherListsManager
         }
     }
 
-    public void RemoveItem(AutoGatherList list, int idx)
+    public void RemoveItem(AutoGatherList list, Gatherable item)
     {
-        if (idx < 0 || idx >= list.Items.Count)
-            return;
-
-        list.RemoveAt(idx);
+        for (var i = 0; i < list.Items.Count; ++i)
+        {
+            if (list.Items[i] == item)
+            {
+                list.RemoveAt(i);
+                break;
+            }
+        }
         Save();
         if (list.Enabled)
             SetActiveItems();
