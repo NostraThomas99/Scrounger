@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text.RegularExpressions;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using GatherBuddy.Classes;
@@ -7,6 +8,7 @@ using ImGuiNET;
 using OtterGui;
 using OtterGui.Raii;
 using Scrounger.AutoGather.Lists;
+using Scrounger.Utils;
 using Scrounger.Utils.Extensions;
 
 namespace Scrounger.UI;
@@ -144,6 +146,8 @@ public partial class MainWindow
     private void DrawItemAdd(AutoGatherList selectorCurrent)
     {
         ImGui.Text("Item Search");
+        ImGui.SameLine();
+        DrawImportButton(selectorCurrent);
         ImGui.InputText("##searchBar", ref _searchTerm, 100);
 
         ImGui.BeginChild($"ItemList", new Vector2(0, 100), true);
@@ -172,5 +176,52 @@ public partial class MainWindow
         }
 
         ImGui.EndChild();
+    }
+
+    private void DrawImportButton(AutoGatherList list)
+    {
+        if (ImGui.Button("Populate Items from Clipboard"))
+        {
+            var clipboardText = ImGuiUtil.GetClipboardText();
+            if (!string.IsNullOrEmpty(clipboardText))
+            {
+                try
+                {
+                    Dictionary<string, int> items = new Dictionary<string, int>();
+
+                    // Regex pattern
+                    var pattern = @"\b(\d+)x\s(.+)\b";
+                    var matches = Regex.Matches(clipboardText, pattern);
+
+                    // Loop through matches and add them to dictionary
+                    foreach (Match match in matches)
+                    {
+                        var quantity = int.Parse(match.Groups[1].Value);
+                        var itemName = match.Groups[2].Value;
+                        items[itemName] = quantity;
+                    }
+
+                    foreach (var (itemName, quantity) in items)
+                    {
+                        var gatherable =
+                            Scrounger.WorldData.Gatherables.Values.FirstOrDefault(g => g.Name[Svc.ClientState.ClientLanguage] == itemName);
+                        if (gatherable == null || gatherable.NodeList.Count == 0)
+                            continue;
+
+                        list.Add(gatherable, (uint)quantity);
+                    }
+
+                    _plugin.AutoGatherListsManager.Save();
+
+                    if (list.Enabled)
+                        _plugin.AutoGatherListsManager.SetActiveItems();
+                }
+                catch (Exception e)
+                {
+                    ChatPrinter.PrintError("Error importing auto-gather list");
+                }
+            }
+        }
+        ImGuiUtil.HoverTooltip("Populate your list with items from the clipboard. Format: 10x Item Name. Uses the same format as Teamcraft, Artisan, Workshoppa, etc.");
     }
 }
