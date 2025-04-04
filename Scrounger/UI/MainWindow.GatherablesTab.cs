@@ -75,7 +75,7 @@ public partial class MainWindow
         ImGui.TableSetupColumn("Remove");
 
         ImGui.TableHeadersRow();
-        foreach (var item in selectorCurrent.Items)
+        foreach (var item in selectorCurrent.Items.ToList())
         {
             ImGui.TableNextRow();
             ImGui.TableSetColumnIndex(0);
@@ -95,7 +95,7 @@ public partial class MainWindow
             }
 
             ImGui.TableSetColumnIndex(5);
-            if (ImGui.Button("Remove"))
+            if (ImGui.Button($"Remove##{item.ItemId}"))
             {
                 _plugin.AutoGatherListsManager.RemoveItem(selectorCurrent, item);
             }

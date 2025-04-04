@@ -79,7 +79,7 @@ public partial class AutoGatherListsManager
     {
         for (var i = 0; i < list.Items.Count; ++i)
         {
-            if (list.Items[i] == item)
+            if (list.Items[i].ItemId == item.ItemId)
             {
                 list.RemoveAt(i);
                 break;
