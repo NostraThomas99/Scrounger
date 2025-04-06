@@ -38,16 +38,20 @@ public class GatherListSelector : ItemSelector<AutoGatherList>
 
     protected override bool OnMove(int idx1, int idx2)
     {
-        return base.OnMove(idx1, idx2);
+        _plugin.AutoGatherListsManager.MoveList(idx1, idx2);
+        return true;
     }
 
     protected override bool OnClipboardImport(string name, string data)
     {
-        return base.OnClipboardImport(name, data);
+        return false;
     }
 
     protected override bool OnDuplicate(string name, int idx)
     {
-        return base.OnDuplicate(name, idx);
+        var list = Items[idx];
+        list.Name = name;
+        _plugin.AutoGatherListsManager.AddList(list);
+        return true;
     }
 }
