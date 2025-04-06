@@ -89,6 +89,12 @@ public partial class MainWindow
                 }
             }
         }
+
+        var minGp = consumable.MinGP;
+        DrawPresetInputInt("Min GP", ref minGp, x => consumable.MinGP = x, $"Minimum GP for {name}");
+        ImGui.SameLine();
+        var maxGp = consumable.MaxGP;
+        DrawPresetInputInt("Max GP", ref maxGp, x => consumable.MaxGP = x, $"Maximum GP for {name}");
     }
 
     private void DrawConfigPresetInternal(ConfigPreset preset)
