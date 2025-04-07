@@ -7,6 +7,7 @@ using ECommons.EzSharedDataManager;
 using Scrounger.Ipc;
 using Scrounger.Utils;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Purify.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather

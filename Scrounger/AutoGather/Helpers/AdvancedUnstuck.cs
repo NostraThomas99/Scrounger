@@ -6,6 +6,7 @@ using System.Numerics;
 using ECommons.DalamudServices;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Helpers/AdvancedUnstuck.cs
 namespace Scrounger.AutoGather.Movement
 {
     public enum AdvancedUnstuckCheckResult

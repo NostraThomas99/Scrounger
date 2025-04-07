@@ -11,6 +11,7 @@ using ECommons.DalamudServices;
 using Scrounger.AutoGather.Lists;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Gather.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather

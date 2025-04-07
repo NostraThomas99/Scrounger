@@ -19,6 +19,7 @@ using OtterGui;
 using OtterGui.Raii;
 using Scrounger.Ipc;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Ui.cs
 namespace Scrounger.AutoGather
 {
     public static class AutoGatherUI

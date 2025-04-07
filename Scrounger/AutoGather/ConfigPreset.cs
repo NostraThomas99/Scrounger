@@ -4,6 +4,7 @@ using ECommons.DalamudServices;
 using Newtonsoft.Json;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/ConfigPreset.cs
 namespace Scrounger.AutoGather
 {
     public record class ConfigPreset

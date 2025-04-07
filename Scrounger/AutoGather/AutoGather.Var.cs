@@ -17,6 +17,7 @@ using System.Numerics;
 using ECommons.DalamudServices;
 using Scrounger.Ipc;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Var.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather

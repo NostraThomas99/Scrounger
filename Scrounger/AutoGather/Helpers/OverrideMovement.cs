@@ -9,6 +9,7 @@ using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
 using ECommons.Logging;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Helpers/OverrideMovement.cs
 //Credit: https://github.com/NightmareXIV/Lifestream/blob/main/Lifestream/Movement/OverrideMovement.cs#7ad417a
 namespace Scrounger.AutoGather.Movement;
 

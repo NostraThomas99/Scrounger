@@ -1,6 +1,7 @@
 ﻿using GatherBuddy.Classes;
 using OtterGui;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Lists/AutoGatherListsManager.ManipPreset.cs
 namespace Scrounger.AutoGather.Lists;
 
 public partial class AutoGatherListsManager

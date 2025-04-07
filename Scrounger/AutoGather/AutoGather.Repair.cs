@@ -11,6 +11,7 @@ using ECommons.GameHelpers;
 using Scrounger.Ipc;
 using Scrounger.Utils;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Repair.cs
 namespace Scrounger.AutoGather;
 
 public unsafe partial class AutoGather

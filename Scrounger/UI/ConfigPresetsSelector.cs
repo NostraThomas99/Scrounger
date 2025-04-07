@@ -6,6 +6,7 @@ using OtterGui;
 using OtterGui.Raii;
 using Scrounger.AutoGather;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/Gui/Interface.ConfigPresetsTab.cs
 namespace Scrounger.UI;
 
 public class ConfigPresetsSelector : ItemSelector<ConfigPreset>

@@ -14,6 +14,7 @@ using ECommons.MathHelpers;
 using Scrounger.Ipc;
 using Scrounger.Utils;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Movement.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather

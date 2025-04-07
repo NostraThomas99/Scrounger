@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using OtterGui;
 using Scrounger.Utils;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Lists/AutoGatherListsManager.cs
 namespace Scrounger.AutoGather.Lists;
 
 public partial class AutoGatherListsManager : IDisposable

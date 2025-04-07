@@ -10,6 +10,7 @@ using Scrounger.AutoGather.Helpers;
 using Scrounger.AutoGather.Lists;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Actions.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather

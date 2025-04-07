@@ -15,6 +15,7 @@ using ECommons.DalamudServices;
 using Scrounger.Data;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Lists/ActiveItemList.cs
 namespace Scrounger.AutoGather.Lists
 {
     internal class ActiveItemList : IEnumerable<GatherTarget>, IDisposable

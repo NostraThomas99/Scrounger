@@ -25,6 +25,7 @@ using Scrounger.Ipc;
 using Scrounger.Utils;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather : IDisposable

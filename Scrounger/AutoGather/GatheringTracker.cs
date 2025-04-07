@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using static Scrounger.AutoGather.GatheringTracker;
 using System.Linq;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/GatheringTracker.cs
 namespace Scrounger.AutoGather
 {
     public sealed class GatheringTracker : IDisposable, IReadOnlyList<ItemSlot>

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using OpenTK.Audio.OpenAL;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Helpers/SoundHelper.cs
 namespace Scrounger.AutoGather.Movement;
 
 

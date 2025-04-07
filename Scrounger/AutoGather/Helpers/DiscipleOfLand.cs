@@ -4,6 +4,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using System;
 using ECommons.DalamudServices;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Helpers/DiscipleOfLand.cs
 namespace Scrounger.AutoGather
 {
     public static class DiscipleOfLand

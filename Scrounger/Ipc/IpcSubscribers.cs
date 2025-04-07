@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ECommons.DalamudServices;
 using ECommons.EzSharedDataManager;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/Plugin/IpcSubscribers.cs
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 namespace Scrounger.Ipc
 {

@@ -4,6 +4,7 @@ using System;
 using ECommons.DalamudServices;
 using Action = Lumina.Excel.Sheets.Action;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.ActionIDs.cs
 namespace Scrounger.AutoGather;
 
 public partial class AutoGather

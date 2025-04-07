@@ -7,6 +7,7 @@ using Scrounger.Ipc;
 using Scrounger.Utils;
 using static ECommons.UIHelpers.AddonMasterImplementations.AddonMaster;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Spiritbond.cs
 namespace Scrounger.AutoGather;
 
 public partial class AutoGather

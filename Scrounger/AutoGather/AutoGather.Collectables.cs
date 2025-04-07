@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Scrounger.Utils.Extensions;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/AutoGather.Collectables.cs
 namespace Scrounger.AutoGather
 {
     public partial class AutoGather

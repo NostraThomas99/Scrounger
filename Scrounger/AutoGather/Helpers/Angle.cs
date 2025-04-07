@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Helpers/Angle.cs
 //Credit: https://github.com/NightmareXIV/Lifestream/blob/main/Lifestream/Movement/Angle.cs#7ad417a
 namespace Scrounger.AutoGather.Movement;
 

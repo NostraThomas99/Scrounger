@@ -11,7 +11,7 @@ using ItemSlot = Scrounger.AutoGather.GatheringTracker.ItemSlot;
 using ECommons.ExcelServices;
 using ECommons;
 using Scrounger.Utils.Extensions;
-
+//Credit: https://github.com/FFXIV-CombatReborn/GatherBuddyReborn/blob/main/GatherBuddy/AutoGather/Helpers/RotationSolver.cs
 namespace Scrounger.AutoGather.Helpers
 {
     internal static class RotationSolver
